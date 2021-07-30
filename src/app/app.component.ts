@@ -5,13 +5,8 @@ import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <input type="file" (change)="uploadFile($event)" />
-    <div *ngIf="uploadPercent">
-      <progress id="file" value="{{ uploadPercent | async }}" max="100"> {{ uploadPercent | async }} </progress>&nbsp;{{ uploadPercent | async }}%
-    </div>
-    <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
- `
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   uploadPercent: Observable<number>;
@@ -34,20 +29,11 @@ export class AppComponent {
   }
 
 
-  copyToClipboard()
-  {
-    const el = document.createElement('textarea');
-    el.value= "testdata";
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
+  copyInputMessage(inputElement){
+    inputElement.select();
     document.execCommand('copy');
-    document.body.removeChild(el);
-
+    inputElement.setSelectionRange(0, 0);
   }
-
 
 }
 
